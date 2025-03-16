@@ -1,6 +1,7 @@
 // Keep track of player's score
 let humanScore = 0;
 let computerScore = 0;
+playGame();
 
 // Randomly choose "rock", "paper" or "scissors"
 function getComputerChoice() {
@@ -32,7 +33,7 @@ function getHumanChoice() {
       humanChoice === "scissors"
     )
   ) {
-    alert("Invalid Choice!\nPlease type 'rock', 'paper', or 'scissots'.'");
+    alert("Invalid Choice!\nPlease type 'rock', 'paper', or 'scissors'.'");
     humanChoice = prompt(
       `Welcome to Rock Paper scissors!\nPlease type 'rock', 'paper',or 'scissors'.`
     ).toLowerCase();
@@ -79,5 +80,24 @@ function playRound(humanChoice, computerChoice) {
   );
 }
 
-// Test playing 1 round
-playRound(getHumanChoice(), getComputerChoice());
+// Play a game which has 5 rounds and declare a winner at the end
+function playGame() {
+  // Play the game 5 times
+  for (let i = 0; i < 5; i++) {
+    playRound(getHumanChoice(), getComputerChoice());
+  }
+
+  // Display final scores
+  console.log(
+    `FINAL SCORE: \nPlayer Score = ${humanScore}\nComputer Score = ${computerScore}`
+  );
+
+  // Display the appropriate message
+  if (humanScore > computerScore) {
+    console.log("YOU WON");
+  } else if (humanScore < computerScore) {
+    console.log("YOU LOST");
+  } else {
+    console.log(console.log("TIE!"));
+  }
+}
