@@ -14,9 +14,12 @@ function getComputerChoice() {
   }
 }
 
-// Test Cases
-console.log(getComputerChoice());
-console.log(getComputerChoice());
-console.log(getComputerChoice());
-console.log(getComputerChoice());
-console.log(getComputerChoice());
+// Write a function that takes in the user's choice of rock, paper or scissors
+function getHumanChoice() {
+  return prompt(
+    `Welcome to Rock Paper scissors!\n Please type 'rock', 'paper', 'scissors'.`
+  );
+}
+
+// Testing user input
+console.log(getHumanChoice());
