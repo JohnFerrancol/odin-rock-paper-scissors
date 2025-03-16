@@ -1,3 +1,7 @@
+// Created variables to keep track of player's score
+let humanScore = 0;
+let computerScore = 0;
+
 // Write a function that randomly returns rock, paper or scissors, this simulate the computer's choice
 function getComputerChoice() {
   // randomInteger is used to randomly select a number from 0 - 2
