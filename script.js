@@ -1,6 +1,10 @@
 // Keep track of player's score
 let humanScore = 0;
 let computerScore = 0;
+const currentScore = document.querySelector(".current-score");
+const btnGroup = document.querySelector(".btn-group");
+const results = document.querySelector(".results");
+
 playGame();
 
 // Randomly choose "rock", "paper" or "scissors"
@@ -19,29 +23,6 @@ function getComputerChoice() {
   }
 }
 
-// Take in the user's choice of rock, paper or scissors
-function getHumanChoice() {
-  let humanChoice = prompt(
-    `Welcome to Rock Paper scissors!\nPlease type 'rock', 'paper',or 'scissors'.`
-  ).toLowerCase(); // Prompt the user for a choice and lowercase it
-
-  // Keep prompting the user for a valid input
-  while (
-    !(
-      humanChoice === "rock" ||
-      humanChoice === "paper" ||
-      humanChoice === "scissors"
-    )
-  ) {
-    alert("Invalid Choice!\nPlease type 'rock', 'paper', or 'scissors'.'");
-    humanChoice = prompt(
-      `Welcome to Rock Paper scissors!\nPlease type 'rock', 'paper',or 'scissors'.`
-    ).toLowerCase();
-  }
-
-  return humanChoice;
-}
-
 // Capitalize strings for display in the console
 function capitalize(string) {
   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
@@ -55,49 +36,72 @@ function playRound(humanChoice, computerChoice) {
 
   if (humanChoice === computerChoice) {
     // Display that there is a tie
-    console.log(`Tie! Both picked ${capitalize(humanChoice)}!`);
+    results.textContent = `Tie! Both picked ${capitalize(humanChoice)}!`;
   } else if (
     // Display that the player won and update the player's score
     (humanChoice === "rock" && computerChoice === "scissors") ||
     (humanChoice === "paper" && computerChoice === "rock") ||
     (humanChoice === "scissors" && computerChoice === "paper")
   ) {
-    console.log(
-      `You won! ${capitalize(humanChoice)} beats ${capitalize(computerChoice)}`
-    );
+    results.textContent = `You won! ${capitalize(
+      humanChoice
+    )} beats ${capitalize(computerChoice)}`;
     humanScore++;
   } else {
     // Display that the computer won and update the computer's score
-    console.log(
-      `You lost! ${capitalize(computerChoice)} beats ${capitalize(humanChoice)}`
-    );
+    results.textContent = `You lost! ${capitalize(
+      computerChoice
+    )} beats ${capitalize(humanChoice)}`;
     computerScore++;
   }
 
   // Display the current score
-  console.log(
-    `Current Score \nPlayer Score = ${humanScore} \nComputer Score = ${computerScore}`
-  );
+  currentScore.textContent = `Current Score: \nPlayer Score = ${humanScore} \nComputer Score = ${computerScore}`;
 }
 
 // Play a game which has 5 rounds and declare a winner at the end
 function playGame() {
-  // Play the game 5 times
-  for (let i = 0; i < 5; i++) {
-    playRound(getHumanChoice(), getComputerChoice());
-  }
+  btnGroup.addEventListener("click", (event) => {
+    // Obtain the information on the button pressed
+    let target = event.target;
+    // run a switch statement to map the id of the button that the player presses to the corresponding choice and play a round
+    switch (target.id) {
+      case "rock":
+        playRound("rock", getComputerChoice());
+        break;
+      case "paper":
+        playRound("paper", getComputerChoice());
+        break;
+      case "scissors":
+        playRound("scissors", getComputerChoice());
+        break;
+    }
 
-  // Display final scores
-  console.log(
-    `FINAL SCORE: \nPlayer Score = ${humanScore}\nComputer Score = ${computerScore}`
-  );
+    // If the human or the computer reached a score of 5, end the game and stop the function
+    if (humanScore === 5) {
+      endGame("WON");
+      return;
+    } else if (computerScore === 5) {
+      endGame("LOST");
+      return;
+    }
+  });
+}
 
-  // Display the appropriate message
-  if (humanScore > computerScore) {
-    console.log("YOU WON");
-  } else if (humanScore < computerScore) {
-    console.log("YOU LOST");
-  } else {
-    console.log(console.log("TIE!"));
-  }
+function endGame(result) {
+  currentScore.innerHTML = `<h1>YOU ${result}</h1>
+   <p>Final Score: \nPlayer Score = ${humanScore} \nComputer Score = ${computerScore}</p>`;
+
+  btnGroup.remove();
+  results.remove();
+
+  // Create a new button to let the user play again
+  const playAgainBtn = document.createElement("button");
+  playAgainBtn.textContent = "Play Again";
+  document.body.appendChild(playAgainBtn);
+
+  // Reload the webpage when the play again button is pressed
+  playAgainBtn.addEventListener("click", () => {
+    location.reload();
+  });
 }
