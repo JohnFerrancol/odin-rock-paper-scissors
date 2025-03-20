@@ -1,7 +1,9 @@
 // Keep track of player's score
 let humanScore = 0;
 let computerScore = 0;
-const currentScore = document.querySelector(".current-score");
+const currentScore = document.querySelector(".current-scores");
+const humanScoreDisplay = document.querySelector("#human-score");
+const computerScoreDisplay = document.querySelector("#computer-score");
 const btnGroup = document.querySelector(".btn-group");
 const results = document.querySelector(".results");
 
@@ -56,7 +58,8 @@ function playRound(humanChoice, computerChoice) {
   }
 
   // Display the current score
-  currentScore.textContent = `Current Score: \nPlayer Score = ${humanScore} \nComputer Score = ${computerScore}`;
+  humanScoreDisplay.textContent = `Player Score: ${humanScore}`;
+  computerScoreDisplay.textContent = `Computer Score: ${computerScore}`;
 }
 
 // Play a game which has 5 rounds and declare a winner at the end
@@ -90,7 +93,8 @@ function playGame() {
 
 function endGame(result) {
   currentScore.innerHTML = `<h1>YOU ${result}</h1>
-   <p>Final Score: \nPlayer Score = ${humanScore} \nComputer Score = ${computerScore}</p>`;
+   <p>Final Score: Player Score = ${humanScore}, Computer Score = ${computerScore}</p>`;
+  currentScore.setAttribute("style", "flex-direction: column");
 
   btnGroup.remove();
   results.remove();
@@ -98,7 +102,7 @@ function endGame(result) {
   // Create a new button to let the user play again
   const playAgainBtn = document.createElement("button");
   playAgainBtn.textContent = "Play Again";
-  document.body.appendChild(playAgainBtn);
+  currentScore.appendChild(playAgainBtn);
 
   // Reload the webpage when the play again button is pressed
   playAgainBtn.addEventListener("click", () => {
