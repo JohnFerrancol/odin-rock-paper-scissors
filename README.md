@@ -1,4 +1,4 @@
-# odin-rock-paper-scissors
+# Rock Papaer Scissors
 
 ## Overview
 
